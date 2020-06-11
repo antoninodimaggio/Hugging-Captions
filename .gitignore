@@ -1,0 +1,15 @@
+
+# macOS
+.DS_Store
+
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# project
+*.log
+*.txt
+*.json
+trained_models/*
+!trained_models/.keep
