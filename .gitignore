@@ -10,6 +10,7 @@ __pycache__/
 # project
 *.log
 *.txt
+!requirements.txt
 *.json
 trained_models/*
 !trained_models/.keep
