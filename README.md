@@ -45,13 +45,13 @@ Just generate captions which are written to ./text/generated_text/somehashtag_ge
 ```
 python tune_transformer.py --tag <some hashtag> --generate \
     --max-length <max length of caption> \
-    --min-length <min length of caption> \
+    --min-length <min length of caption>
 ```
 Fine-tune and generate at the same time
 ```
 python tune_transformer.py --tag <some hashtag> --train --generate \
     --max-length <max length of caption> \
-    --min-length <min length of caption> \
+    --min-length <min length of caption>
 ```
 
 ## Future Work
