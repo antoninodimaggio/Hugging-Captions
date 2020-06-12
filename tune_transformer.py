@@ -80,14 +80,14 @@ def main():
         )
     parser.add_argument('--tag', type=str, help='Hashtag that we used to train the data', required=True)
     # finetune stuff (could add more params later)
-    parser.add_argument('--train', action='store_true', default=False, help='Should we train the model')
+    parser.add_argument('--train', action='store_true', default=False, help='Should we train the model (default: False)')
     # generate_caption stuff
     parser.add_argument('--generate', action='store_true', default=False, help='Should we generate captions')
     parser.add_argument('--prompt', type=str, default='My day',
-        help='Give the model something to start with when generating text 2-3 words will due')
-    parser.add_argument('--max-length', type=int, default=40, help='Max length of caption text')
-    parser.add_argument('--min-length', type=int, default=20, help='Min length of caption text')
-    parser.add_argument('--num-captions', type=int, default=20, help='Number of captions to generate')
+        help='Give the model something to start with when generating text 2-5 words will due')
+    parser.add_argument('--max-length', type=int, default=40, help='Max length of caption text (default=40)')
+    parser.add_argument('--min-length', type=int, default=20, help='Min length of caption text (default=20)')
+    parser.add_argument('--num-captions', type=int, default=20, help='Number of captions to generate (default=20)')
     args = parser.parse_args()
 
     if (args.train and args.generate):
@@ -105,6 +105,8 @@ def main():
         generate_captions(args.tag, args.prompt, args.max_length,
             args.min_length, args.num_captions)
         print('Done!')
+    else:
+        print('Please choose either --train or --generate or both')
 
 
 if __name__ == '__main__':

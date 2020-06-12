@@ -112,7 +112,7 @@ def extract(json_dir, min_likes):
 
 def main():
     parser = argparse.ArgumentParser(description='Pull and clean hashtag data')
-    parser.add_argument('--tag', type=str, help='Hashtage page that you want to scrape', required=True)
+    parser.add_argument('--tag', type=str, help='Hashtage page that you want to scrape exclude the #', required=True)
     parser.add_argument('--caption-queries', type=int, default=15, help='Each query returns ~150 captions (default: 15)')
     parser.add_argument('--min-likes', type=int, default=30, help='Only use captions with >= min_likes (default: 30)')
     args = parser.parse_args()
