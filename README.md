@@ -1,6 +1,6 @@
 # Hugging-Captions
 
-![example](https://drive.google.com/uc?id=1kKYG7n2O7kv1Kg1Ef72Hzzdz8WkU_G79)
+![If this does not load refresh](https://drive.google.com/uc?id=1kKYG7n2O7kv1Kg1Ef72Hzzdz8WkU_G79)
 
 <i>Photo is from Rocky Mountain National Park</i>
 
@@ -18,6 +18,7 @@ Hugging Captions fine-tunes [GPT-2](https://openai.com/blog/better-language-mode
 * Python 3.6 ~ (not sure about compatibility with other Python 3 versions)
 ```
 git clone https://github.com/antoninodimaggio/Hugging-Captions.git
+cd Hugging-Captions
 pip install -r requirements.txt
 pip install git+https://github.com/antoninodimaggio/instagram-scraper.git@hugging_captions
 ```
@@ -36,7 +37,8 @@ python pull_and_clean.py --tag <some hashtag> \
 * Now that we have our training data we can fine-tune our transformer-based language model.
 * I trained my model with ~3000 lines of text on one GeFore RTX 2080 TI with 11019MiB of available memory. This took less than 5 minutes. GPU memory can be an issue.
 * Detailed information on each argument can be found [here](DOCS.md)
-* You could also use python tune_transformer.py -h for help <br><br>
+* You could also use python tune_transformer.py -h for help
+
 Just fine-tune the model which is saved at ./trained_models/somehashtag/
 ```
 python tune_transformer.py --tag <some hashtag> --train
