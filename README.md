@@ -2,10 +2,10 @@
   <img alt="title" src="./docs/images/hugging_captions.png" width="70%">
   <img alt="tagline" src="./docs/images/tagline.png" width="60%">
 </div>
-
+<br>
 <div align="center">
   <a href="https://www.instagram.com/p/CBZE6gwg_h7/?igshid=8olu6kun06k4">
-        <img alt="dog" src="./docs/images/dog.jpg" width="50%">
+        <img alt="dog" src="./docs/images/diagram.png" width="80%">
   </a>  
 </div>
 <br>
@@ -78,7 +78,7 @@ python tune_transformer.py --tag shibainu --train --generate \
 ### My Results Are Not What I Expected
 Some of the generated captions are going to be ugly. This is expected no matter how much the data, both training and generated, is cleaned. If you are not getting the results that you want I have three suggestions.
 1. **Choose a better hashtag.** If you are captioning a photo of a dog do not choose #dog instead try #poodle, #bulldog, and so on.
-2. **Make your prompt more specific.** A prompt like "My day" is very general and will lead to general results, instead try something like "My Saturday Morning".
+2. **Make your prompt more specific.** A prompt like "My day" is very general and will lead to general results, instead try something like "My Saturday morning".
 3. **Increase your number of captions.** The default is 20, bump that up to 60.
 ## Future Work
 * Explore ways to better clean caption data both generated and training
