@@ -64,7 +64,7 @@ def remove_dumb(caption):
     # this list is far from complete
     dumb_stuff = ['http', '@', 'follow','link', 'comment', '%',
                   'alcohol', 'order', 'sale', 'www', 'subscribe',
-                  'clearance', '...']
+                  'clearance', '...', 'twitter']
     if any(dumb in caption.lower() for dumb in dumb_stuff):
         return True
     return False
@@ -113,7 +113,7 @@ def extract(json_dir, min_likes):
 def main():
     parser = argparse.ArgumentParser(description='Pull and clean hashtag data')
     parser.add_argument('--tag', type=str, help='Hashtage page that you want to scrape exclude the #', required=True)
-    parser.add_argument('--caption-queries', type=int, default=15, help='Each query returns ~150 captions (default: 15)')
+    parser.add_argument('--caption-queries', type=int, default=30, help='Each query returns ~150 captions (default: 30)')
     parser.add_argument('--min-likes', type=int, default=30, help='Only use captions with >= min_likes (default: 30)')
     args = parser.parse_args()
     download_hashtag_json(args.tag, args.caption_queries)

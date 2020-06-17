@@ -1,4 +1,3 @@
-
 # macOS
 .DS_Store
 
@@ -8,9 +7,9 @@ __pycache__/
 *$py.class
 
 # project
+*.json
 *.log
 *.txt
 !requirements.txt
-*.json
 trained_models/*
 !trained_models/.keep
