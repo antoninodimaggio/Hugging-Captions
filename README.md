@@ -27,7 +27,7 @@
 
 ## Introduction
 
-Hugging Captions fine-tunes [GPT-2](https://openai.com/blog/better-language-models/), a transformer-based language model by [OpenAI](https://openai.com/), to generate realistic photo captions. The model is trained using cleaned caption data obtained from relevant hashtags. The fine-tuned model generates captions given a starting prompt of about 1-5 words. All of the transformer stuff is implemented using [Hugging Face's Transformers library](https://github.com/huggingface/transformers), hence the name Hugging Captions.
+Hugging Captions fine-tunes [GPT-2](https://openai.com/blog/better-language-models/), a transformer-based language model by [OpenAI](https://openai.com/), to generate realistic photo captions. All of the transformer stuff is implemented using [Hugging Face's Transformers library](https://github.com/huggingface/transformers), hence the name Hugging Captions.
 ## Setup
 **Required**
 * Python 3.6 +
