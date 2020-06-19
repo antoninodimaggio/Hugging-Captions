@@ -4,7 +4,7 @@
 
 **Flags**
 * `--tag`: Hashtage page that you want to scrape for captions exclude the # [Required]
-* `--caption-queries`: Each query returns ~150 captions (default: 30)
+* `--caption-queries`: Each query returns ~150 captions (default: 40)
 * `--min-likes`: Only use captions with >= min_likes (default: 30)
 
 ## tune_transformer.py

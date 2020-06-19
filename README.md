@@ -44,7 +44,7 @@ pip install git+https://github.com/antoninodimaggio/instagram-scraper.git@huggin
 * You could also use python ```python download.py -h``` for help
 ```
 python download.py --tag shibainu \
-    --caption-queries 30 \
+    --caption-queries 40 \
     --min-likes 30
 ```
 ## Training and Generating Captions
