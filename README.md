@@ -60,18 +60,18 @@ python tune_transformer.py --tag shibainu --train
 ```
 python tune_transformer.py --tag shibainu --generate \
     --prompt Adorable\ smile
-    --max-length 40 \
+    --max-length 60 \
     --min-length 20 \
-    --num-captions 20
+    --num-captions 40
 ```
 ### Train and Generate Captions
 * Trains and generates captions all in one go
 ```
 python tune_transformer.py --tag shibainu --train --generate \
     --prompt Adorable\ smile
-    --max-length 40 \
+    --max-length 60 \
     --min-length 20 \
-    --num-captions 20
+    --num-captions 40
 ```
 ## See Your Results
 * Navigate to ```/Hugging-Captions/text/generated_text/<tag>_gen.txt``` to look at your generated captions
@@ -79,7 +79,7 @@ python tune_transformer.py --tag shibainu --train --generate \
 Some of the generated captions are going to be ugly. This is expected no matter how much the data, both training and generated, is cleaned. If you are not getting the results that you want I have three suggestions.
 1. **Choose a better hashtag.** If you are captioning a photo of a dog do not choose #dog instead try #poodle, #bulldog, and so on.
 2. **Make your prompt more specific.** A prompt like "My day" is very general and will lead to general results, instead try something like "My Saturday morning".
-3. **Increase your number of captions.** The default is 20, bump that up to 60.
+3. **Increase your number of captions.** The default is 40, bump that up to 80.
 ## Future Work
 * Explore ways to better clean caption data both generated and training
 * Explore different pre-trained language models
