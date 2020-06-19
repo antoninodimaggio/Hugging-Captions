@@ -1,7 +1,7 @@
 import argparse
 import os
 import torch
-from pull_and_clean import write_line_by_line
+from download import write_line_by_line
 from transformers import (
     AutoConfig, AutoModelWithLMHead, AutoTokenizer,
     DataCollatorForLanguageModeling, set_seed,
@@ -51,6 +51,17 @@ def finetune(tag):
 # question mark chacracter, spacing issues
 def generate_captions(tag, prompt, max_length, min_length, num_return_sequences):
     """ generate captions from our fine-tuned model """
+
+    def clean_token(text):
+        """ edge case where the endoftext token can be left in generated """
+        token = '<|endoftext|>'
+        while len(token)>1:
+            text = text.replace(token, '')
+            token = token[:-1]
+        text = text.strip()
+        if text[-1] == '"' and text.count('"') % 2: text = text[:-1]
+        return text.strip()
+
     model = AutoModelWithLMHead.from_pretrained(f'./trained_models/{tag}/').to('cuda')
     encoded_sentence = tokenizer.encode(prompt, add_special_tokens=False, return_tensors="pt").to('cuda')
     output_sequences = model.generate(
@@ -66,7 +77,7 @@ def generate_captions(tag, prompt, max_length, min_length, num_return_sequences)
     for generated_sequence_idx, generated_sequence in enumerate(output_sequences):
         text = tokenizer.decode(generated_sequence, clean_up_tokenization_spaces=True)
         text = text[: text.find(stop_token)]
-        generated_sequences.append(text)
+        generated_sequences.append(clean_token(text))
 
     # just so I can see things better
     generated_text = '\nCAPTION: '.join(generated_sequences)
@@ -85,9 +96,9 @@ def main():
     parser.add_argument('--generate', action='store_true', default=False, help='Should we generate captions')
     parser.add_argument('--prompt', type=str, default='My day',
         help='Give the model something to start with when generating text 1-5 words will due (default= My\ Day)')
-    parser.add_argument('--max-length', type=int, default=40, help='Max length of caption text (default=40)')
+    parser.add_argument('--max-length', type=int, default=60, help='Max length of caption text (default=60)')
     parser.add_argument('--min-length', type=int, default=20, help='Min length of caption text (default=20)')
-    parser.add_argument('--num-captions', type=int, default=20, help='Number of captions to generate (default=20)')
+    parser.add_argument('--num-captions', type=int, default=40, help='Number of captions to generate (default=40)')
     args = parser.parse_args()
 
     if (args.train and args.generate):

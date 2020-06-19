@@ -27,7 +27,7 @@
 
 ## Introduction
 
-Hugging Captions fine-tunes [GPT-2](https://openai.com/blog/better-language-models/), a transformer-based language model by [OpenAI](https://openai.com/), to generate realistic photo captions. The model is trained using cleaned caption data obtained from relevant hashtags. The fine-tuned model generates captions given a starting prompt of about 1-5 words. All of the transformer stuff is implemented using [Hugging Face's Transformers library](https://github.com/huggingface/transformers), hence the name Hugging Captions.
+Hugging Captions fine-tunes [GPT-2](https://openai.com/blog/better-language-models/), a transformer-based language model by [OpenAI](https://openai.com/), to generate realistic photo captions. All of the transformer stuff is implemented using [Hugging Face's Transformers library](https://github.com/huggingface/transformers), hence the name Hugging Captions.
 ## Setup
 **Required**
 * Python 3.6 +
@@ -44,7 +44,7 @@ pip install git+https://github.com/antoninodimaggio/instagram-scraper.git@huggin
 * You could also use python ```python download.py -h``` for help
 ```
 python download.py --tag shibainu \
-    --caption-queries 30 \
+    --caption-queries 40 \
     --min-likes 30
 ```
 ## Training and Generating Captions
@@ -60,26 +60,26 @@ python tune_transformer.py --tag shibainu --train
 ```
 python tune_transformer.py --tag shibainu --generate \
     --prompt Adorable\ smile
-    --max-length 40 \
+    --max-length 60 \
     --min-length 20 \
-    --num-captions 20
+    --num-captions 40
 ```
 ### Train and Generate Captions
 * Trains and generates captions all in one go
 ```
 python tune_transformer.py --tag shibainu --train --generate \
     --prompt Adorable\ smile
-    --max-length 40 \
+    --max-length 60 \
     --min-length 20 \
-    --num-captions 20
+    --num-captions 40
 ```
 ## See Your Results
 * Navigate to ```/Hugging-Captions/text/generated_text/<tag>_gen.txt``` to look at your generated captions
 ### My Results Are Not What I Expected
-Some of the generated captions are going to be ugly. This is expected no matter how much the data, both training and generated, is cleaned. If you are not getting the results that you want I have three suggestions.
+Some of the generated captions are going to be ugly. Some of the generated captions are going to be really good but a word or two simply does not make sense. This is expected no matter how much the data, both training and generated, is cleaned. If you are not getting the results that you want I have three suggestions.
 1. **Choose a better hashtag.** If you are captioning a photo of a dog do not choose #dog instead try #poodle, #bulldog, and so on.
 2. **Make your prompt more specific.** A prompt like "My day" is very general and will lead to general results, instead try something like "My Saturday morning".
-3. **Increase your number of captions.** The default is 20, bump that up to 60.
+3. **Increase your number of captions.** The default is 40, bump that up to 80.
 ## Future Work
 * Explore ways to better clean caption data both generated and training
 * Explore different pre-trained language models
