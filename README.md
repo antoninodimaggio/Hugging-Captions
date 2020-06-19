@@ -5,7 +5,7 @@
 <br>
 <div align="center">
   <a href="https://www.instagram.com/p/CBZE6gwg_h7/?igshid=8olu6kun06k4">
-        <img alt="dog" src="./docs/images/diagram.png" width="80%">
+        <img alt="dog" src="./docs/images/diagram_centered.png" width="80%">
   </a>  
 </div>
 <br>
