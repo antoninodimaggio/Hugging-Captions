@@ -76,7 +76,7 @@ python tune_transformer.py --tag shibainu --train --generate \
 ## See Your Results
 * Navigate to ```/Hugging-Captions/text/generated_text/<tag>_gen.txt``` to look at your generated captions
 ### My Results Are Not What I Expected
-Some of the generated captions are going to be ugly. This is expected no matter how much the data, both training and generated, is cleaned. If you are not getting the results that you want I have three suggestions.
+Some of the generated captions are going to be ugly. Some of the generated captions are going to be really good but a word or two simply does not make sense. This is expected no matter how much the data, both training and generated, is cleaned. If you are not getting the results that you want I have three suggestions.
 1. **Choose a better hashtag.** If you are captioning a photo of a dog do not choose #dog instead try #poodle, #bulldog, and so on.
 2. **Make your prompt more specific.** A prompt like "My day" is very general and will lead to general results, instead try something like "My Saturday morning".
 3. **Increase your number of captions.** The default is 40, bump that up to 80.
