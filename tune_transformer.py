@@ -1,7 +1,7 @@
 import argparse
 import os
 import torch
-from pull_and_clean import write_line_by_line
+from download import write_line_by_line
 from transformers import (
     AutoConfig, AutoModelWithLMHead, AutoTokenizer,
     DataCollatorForLanguageModeling, set_seed,
