@@ -31,7 +31,7 @@ Hugging Captions fine-tunes [GPT-2](https://openai.com/blog/better-language-mode
 ## Setup
 **Required**
 * Python 3.6 +
-* CUDA 10.2
+* CUDA 10.2 ([Instructions](https://pytorch.org/get-started/locally/) for installing PyTorch on 9.2 or 10.1)
 ```
 git clone https://github.com/antoninodimaggio/Hugging-Captions.git
 cd Hugging-Captions
@@ -41,7 +41,7 @@ pip install git+https://github.com/antoninodimaggio/instagram-scraper.git@huggin
 ## Download Training Data
 * It is important that you choose a hashtag that has more than 5000 posts and is relevant to the photo you want to generate a caption for
 * Detailed information on each argument can be found [here](docs/DOCS.md)
-* You could also use python ```python download.py -h``` for help
+* You could also use python `python download.py -h` for help
 ```
 python download.py --tag shibainu \
     --caption-queries 40 \
@@ -54,9 +54,9 @@ python download.py --tag shibainu \
 python tune_transformer.py --tag shibainu --train
 ```
 ### Generate Captions
-* The most important argument is ```--prompt```, you want too lead your model in the right direction, the more specific the better.
+* The most important argument is `--prompt`, you want too lead your model in the right direction, the more specific the better.
 * Detailed information on each argument can be found [here](docs/DOCS.md)
-* You could also use ```python tune_transformer.py  -h``` for help
+* You could also use `python tune_transformer.py  -h` for help
 ```
 python tune_transformer.py --tag shibainu --generate \
     --prompt Adorable\ smile
@@ -74,7 +74,7 @@ python tune_transformer.py --tag shibainu --train --generate \
     --num-captions 40
 ```
 ## See Your Results
-* Navigate to ```/Hugging-Captions/text/generated_text/<tag>_gen.txt``` to look at your generated captions
+* Navigate to `/Hugging-Captions/text/generated_text/<tag>_gen.txt` to look at your generated captions
 ### My Results Are Not What I Expected
 Some of the generated captions are going to be ugly. Some of the generated captions are going to be really good but a word or two simply does not make sense. This is expected no matter how much the data, both training and generated, is cleaned. If you are not getting the results that you want I have three suggestions.
 1. **Choose a better hashtag.** If you are captioning a photo of a dog do not choose #dog instead try #poodle, #bulldog, and so on.
