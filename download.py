@@ -3,46 +3,52 @@ import glob
 import json
 import os
 import re
+import time
 from functools import wraps
 from langdetect import detect
+from tqdm import tqdm
 
 
-def run_script(func):
-    """ decorator to run forked instagram-scraper  """
+def time_function(func):
+    """decorator to time a function """
     @wraps(func)
-    def os_call(*args, **kwargs):
-        python_str = f'instagram-scraper --media-types none --tag \
-        {args[0]} --caption-queries {args[1]} --log-destination logging \
-        --destination json'
-        os.system(python_str)
-    return os_call
+    def print_time(*args, **kwargs):
+        start = time.perf_counter()
+        result = func(*args, **kwargs)
+        end = time.perf_counter()
+        print(f'Finished {func.__name__!r} in {(end - start):.4f} secs')
+        return result
+    return print_time
 
 
-@run_script
-def download_hashtag_json(tag, caption_queries):
-    if not os.path.exists('logging'):
+def download_json(tag, caption_queries):
+    """download json that contains captions"""
+    if not os.path.exists('logging/instagram_scraper'):
         os.makedirs('logging')
-
     if not os.path.exists('json'):
         os.makedirs('json')
+    cmd_str = f'instagram-scraper --media-types none --tag \
+    {tag} --caption-queries {caption_queries} --log-destination \
+    logging/instagram_scraper/ --destination json'
+    os.system(cmd_str)
 
 
-def get_captions(json_path, min_likes):
-
+def parse_captions(json_path, min_likes):
+    """parse json and put the captions in a list"""
     def only_english(caption):
-        """ make sure that the caption is in english (this is slow) """
+        # make sure that the caption is in english (slow)
         try:
             if detect(caption) == 'en':
                 return True
             return False
-        except Exception as e:
+        except Exception:
             # something went wrong we do not want this caption
             return False
 
-    def caption(post):
+    def get_caption(post):
         try:
             return post['node']['edge_media_to_caption']['edges'][0]['node']['text']
-        except Exception as e:
+        except Exception:
             # if there is no caption then we do not want it
             return None
 
@@ -50,75 +56,77 @@ def get_captions(json_path, min_likes):
          data = json.load(f)
 
     post_list = data['edge_hashtag_to_media']['edges']
-    caption_list = [caption(post) for post in post_list
+    caption_list = [get_caption(post) for post in post_list
                     if post['node']['edge_liked_by']['count'] >= min_likes
-                    and only_english(caption(post))
-                    and caption(post) != None]
+                    and only_english(get_caption(post))
+                    and get_caption(post) != None]
     return caption_list
 
 
 def remove_dumb(caption):
-    """ discard any caption that has any of these substrings """
-    # make sure that these are all lower case
-    # boring words, buisness promo, signs of low quality caption
-    # this list is far from complete
-    dumb_stuff = ['http', '@', 'follow','link', 'comment', '%',
-                  'alcohol', 'order', 'sale', 'www', 'subscribe',
-                  'clearance', '...', 'twitter']
-    if any(dumb in caption.lower() for dumb in dumb_stuff):
+    """discard any caption that has any of these substrings"""
+    # boring words, buisness promo, spam, ect.
+    # not sure how I should deal with punctuation still
+    punctuation = ['...', '---', '___', '_ _ _']
+    special = ['@', '%']
+    words = ['http', 'follow', 'link', 'comment', 'alcohol', 'order',
+             'sale', 'www', 'subscribe',' clearance', 'twitter', 'money',
+             'notifications', 'repost', 'facebook']
+    dumb_stuff = punctuation + special + words
+    if any(dumb.lower() in caption.lower() for dumb in dumb_stuff):
         return True
     return False
 
 
 def remove_block_hashtags(caption):
-    """ people add these hidden hashtags at the bottom of their captions """
-    # this list is not complete (still have new line issues)
-    tokens = ['\n\n', '\n', '\u2022']
-    for token in tokens:
-        # deals with truncation issue (I am sure there is a way to fix this)
-        if token in caption:
-            caption = caption[0: caption.find(token)]
-    return caption
+    """attempt to remove hidden hashtags at the bottom of captions"""
+    caption = caption.split('\n', 1)[0]
+    clean_caption = caption.split('\u2022', 1)[0]
+    return clean_caption
 
 
 def remove_long_seq(caption, threshold=3):
-    """ if we have a bunch of hashtags in a row remove them """
+    """if we have a bunch of hashtags in a row remove them"""
     hashtag_idx = [m.span() for m in re.finditer(r'\B#\w+', caption)]
     if len(hashtag_idx) >= threshold:
         return caption[:hashtag_idx[0][0]]
     return caption
 
 
-def write_line_by_line(path, total_text):
-    with open(path, 'w') as f:
-        f.write(total_text)
+def write_line_by_line(path, captions):
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(captions)
 
 
-def extract(json_dir, min_likes):
-    all_files = glob.glob(os.path.join(json_dir, "*.json"))
-    print('Parsing JSON ...')
-    n_list  = [get_captions(f, min_likes) for f in all_files]
-    print('Done parsing JSON!')
-    print('Starting to clean the data ...')
-    # just leave all of these for loops for now, could improve in future
-    caption_list = [cap for sublist in n_list for cap in sublist]
-    caption_list = [cap for cap in caption_list if not remove_dumb(cap)]
-    caption_list = [remove_block_hashtags(cap) for cap in caption_list]
-    caption_list = [remove_long_seq(cap) for cap in caption_list if len(cap.split()) >=3]
-    total_text = '\n'.join(caption_list)
-    print('Done cleaning the data!')
-    return total_text
+# @time_function
+def clean_captions(json_dir, min_likes):
+    def clean(cap):
+        cap = remove_block_hashtags(cap)
+        cap = remove_long_seq(cap)
+        return cap
+    files = sorted(glob.glob(os.path.join(json_dir, "*.json")))
+    ndim_captions  = [parse_captions(f, min_likes) for f in tqdm(files, desc='Parsing JSON')]
+    captions = [cap for sublist in ndim_captions for cap in sublist]
+    captions = [clean(cap) for cap in tqdm(captions, desc='Cleaning captions') if not remove_dumb(cap)]
+    captions = '\n'.join([cap for cap in captions if len(cap.split()) >=3])
+    return captions
+
+
+@time_function
+def run_clean(tag, caption_queries, min_likes):
+    """download captions, clean captions, write clean captions"""
+    download_json(tag, caption_queries)
+    captions = clean_captions(f'./json/{tag}/', min_likes)
+    write_line_by_line(f'./text/training_text/{tag}.txt', captions)
 
 
 def main():
     parser = argparse.ArgumentParser(description='Pull and clean hashtag data')
     parser.add_argument('--tag', type=str, help='Hashtage page that you want to scrape exclude the #', required=True)
-    parser.add_argument('--caption-queries', type=int, default=40, help='Each query returns ~150 captions (default: 40)')
-    parser.add_argument('--min-likes', type=int, default=30, help='Only use captions with >= min_likes (default: 30)')
+    parser.add_argument('--caption-queries', type=int, default=100, help='Each query returns ~150 captions (default: 100)')
+    parser.add_argument('--min-likes', type=int, default=10, help='Only use captions with >= min_likes (default: 10)')
     args = parser.parse_args()
-    download_hashtag_json(args.tag, args.caption_queries)
-    total_text = extract(f'./json/{args.tag}/', args.min_likes)
-    write_line_by_line(f'./text/training_text/{args.tag}.txt', total_text)
+    run_clean(args.tag, args.caption_queries, args.min_likes)
 
 
 if __name__ == '__main__':
