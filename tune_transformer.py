@@ -87,7 +87,7 @@ def generate_captions(tag, prompt, max_length, min_length, num_return_sequences)
     generated_text = '\nCAPTION: '.join(generated_sequences)
     generated_text = 'CAPTION: ' + generated_text
     write_line_by_line(f'./text/generated_text/{tag}_gen.txt', generated_text)
-    print(f'writing captions: /Hugging-Captions/text/generated_text/{tag}_gen.txt')
+    print(f'Writing captions: /Hugging-Captions/text/generated_text/{tag}_gen.txt')
 
 
 def main():
