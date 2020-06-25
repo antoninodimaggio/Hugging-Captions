@@ -41,7 +41,6 @@ def finetune(tag):
         data_collator=data_collator,
         train_dataset=train_dataset,
         prediction_loss_only=True)
-    trainer.train()
     with open(f'./logging/training_stats/training_{tag}.log', 'w') as log:
         sys.stdout = log
         trainer.train()
