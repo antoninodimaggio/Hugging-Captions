@@ -25,14 +25,14 @@ def finetune(tag):
     data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
     epochs = 8
     training_args = TrainingArguments(
-        output_dir='logging',
+        output_dir='logging/output',
         overwrite_output_dir=True,
         do_train=True,
         num_train_epochs=epochs,
         gradient_accumulation_steps=1,
         learning_rate=1e-4,
         per_gpu_train_batch_size=1,
-        logging_steps=100,
+        logging_steps=50,
         save_steps=0)
     set_seed(training_args.seed)
     trainer = Trainer(
@@ -87,6 +87,7 @@ def generate_captions(tag, prompt, max_length, min_length, num_return_sequences)
     generated_text = '\nCAPTION: '.join(generated_sequences)
     generated_text = 'CAPTION: ' + generated_text
     write_line_by_line(f'./text/generated_text/{tag}_gen.txt', generated_text)
+    print(f'Writing captions: /Hugging-Captions/text/generated_text/{tag}_gen.txt')
 
 
 def main():
