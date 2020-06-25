@@ -44,7 +44,7 @@ pip install -r requirements.txt
 ```
 python download.py --tag shibainu \
     --caption-queries 40 \
-    --min-likes 30
+    --min-likes 10
 ```
 ## Training and Generating Captions
 ### Train
