@@ -36,7 +36,6 @@ Hugging Captions fine-tunes [GPT-2](https://openai.com/blog/better-language-mode
 git clone https://github.com/antoninodimaggio/Hugging-Captions.git
 cd Hugging-Captions
 pip install -r requirements.txt
-pip install git+https://github.com/antoninodimaggio/instagram-scraper.git@hugging_captions
 ```
 ## Download Training Data
 * It is important that you choose a hashtag that has more than 5000 posts and is relevant to the photo you want to generate a caption for
@@ -45,7 +44,7 @@ pip install git+https://github.com/antoninodimaggio/instagram-scraper.git@huggin
 ```
 python download.py --tag shibainu \
     --caption-queries 40 \
-    --min-likes 30
+    --min-likes 10
 ```
 ## Training and Generating Captions
 ### Train

@@ -1,5 +1,6 @@
 import argparse
 import os
+import sys
 import torch
 from download import write_line_by_line
 from transformers import (
@@ -40,7 +41,10 @@ def finetune(tag):
         data_collator=data_collator,
         train_dataset=train_dataset,
         prediction_loss_only=True)
-    trainer.train()
+    with open(f'./logging/training_stats/training_{tag}.log', 'w') as log:
+        sys.stdout = log
+        trainer.train()
+    sys.stdout = sys.__stdout__
     # save the model
     if not os.path.exists(f'./trained_models/{tag}/'):
         os.makedirs(f'./trained_models/{tag}/')
