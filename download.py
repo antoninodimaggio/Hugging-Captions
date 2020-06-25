@@ -82,14 +82,14 @@ def remove_block_hashtags(caption):
     """attempt to remove hidden hashtags at the bottom of captions"""
     caption = caption.split('\n', 1)[0]
     clean_caption = caption.split('\u2022', 1)[0]
-    return clean_caption
+    return clean_caption.strip()
 
 
 def remove_long_seq(caption, threshold=3):
     """if we have a bunch of hashtags in a row remove them"""
     hashtag_idx = [m.span() for m in re.finditer(r'\B#\w+', caption)]
     if len(hashtag_idx) >= threshold:
-        return caption[:hashtag_idx[0][0]]
+        return caption[:hashtag_idx[0][0]].strip()
     return caption
 
 
