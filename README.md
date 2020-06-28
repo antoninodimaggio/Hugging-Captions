@@ -10,9 +10,6 @@
 </div>
 <br>
 <p align="center">
-    <a href="https://github.com/antoninodimaggio/Hugging-Captions">
-        <img alt="star" src="https://img.shields.io/github/stars/antoninodimaggio/Hugging-Captions?style=social">
-    </a>
     <a href="https://www.instagram.com/huggingcaptions/">
         <img alt="instagram" src="https://img.shields.io/badge/Instagram-%40huggingcaptions-ff69b4">
     </a>
@@ -23,6 +20,15 @@
         <img alt="python" src="https://img.shields.io/badge/python%20-3.6%2B-blue">
     </a>
     <img alt="python" src="https://img.shields.io/badge/contributions-Welcome-brightgreen">
+</p>
+
+<p align="center">
+    <a href="https://github.com/antoninodimaggio/Hugging-Captions">
+        <img alt="star" src="https://img.shields.io/github/stars/antoninodimaggio/Hugging-Captions?style=social">
+    </a>
+    <a href="https://twitter.com/tonyjdimaggio">
+        <img alt="twitter" src="https://img.shields.io/twitter/follow/tonyjdimaggio?style=social">
+    </a>
 </p>
 
 ## Introduction
@@ -38,7 +44,7 @@ cd Hugging-Captions
 pip install -r requirements.txt
 ```
 ## Download Training Data
-* It is important that you choose a hashtag that has more than 5000 posts and is relevant to the photo you want to generate a caption for
+* It is important that you choose a hashtag that has more than 10,000 posts and is relevant to the photo you want to generate a caption for
 * Detailed information on each argument can be found [here](docs/DOCS.md)
 * You could also use python `python download.py -h` for help
 ```
