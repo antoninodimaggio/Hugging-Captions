@@ -27,7 +27,7 @@
         <img alt="star" src="https://img.shields.io/github/stars/antoninodimaggio/Hugging-Captions?style=social">
     </a>
     <a href="https://twitter.com/tonyjdimaggio">
-        <img alt="python" src="https://img.shields.io/twitter/follow/tonyjdimaggio?style=social">
+        <img alt="twitter" src="https://img.shields.io/twitter/follow/tonyjdimaggio?style=social">
     </a>
 </p>
 
