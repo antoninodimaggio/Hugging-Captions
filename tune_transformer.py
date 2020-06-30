@@ -103,7 +103,8 @@ def main():
         help='Give the model something to start with when generating text 1-5 words will due (default= My\ Day)')
     parser.add_argument('--max-length', type=int, default=60, help='Max length of caption text (default=60)')
     parser.add_argument('--min-length', type=int, default=20, help='Min length of caption text (default=20)')
-    parser.add_argument('--num-captions', type=int, default=40, help='Number of captions to generate (default=40)')
+    parser.add_argument('--num-captions', type=int, default=40,
+        help='Number of captions to generate, some of these captions will be dropped because they are just the prompt with punctuation (default=40)')
     args = parser.parse_args()
 
     if (args.train and args.generate):
