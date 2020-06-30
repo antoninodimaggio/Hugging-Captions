@@ -17,4 +17,4 @@
 * `--prompt`: Give the model something to start with when generating text 1-5 words will due (default= My\ Day)
 * `--max-length`: Max length of caption text (default=60)
 * `--min-length`: Min length of caption text (default=20)
-* `--num-captions`: Number of captions to generate (default=40)
+* `--num-captions`: Number of captions to generate, some of these captions will be dropped because they are just the prompt with punctuation (default=40)
