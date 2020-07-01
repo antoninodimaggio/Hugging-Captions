@@ -38,7 +38,6 @@ Hugging Captions fine-tunes [GPT-2](https://openai.com/blog/better-language-mode
 **Required**
 * Python 3.6 +
 * CUDA 10.2 ([Instructions](https://pytorch.org/get-started/locally/) for installing PyTorch on 9.2 or 10.1)
-* If you are having issues installing the requirements for the project it most likely has something to do with CUDA
 ```
 git clone https://github.com/antoninodimaggio/Hugging-Captions.git
 cd Hugging-Captions
