@@ -38,9 +38,7 @@ def parse_captions(json_path, min_likes):
     def only_english(caption):
         # make sure that the caption is in english (slow)
         try:
-            if detect(caption) == 'en':
-                return True
-            return False
+            return True if detect(caption) == 'en' else False
         except Exception:
             # something went wrong we do not want this caption
             return False

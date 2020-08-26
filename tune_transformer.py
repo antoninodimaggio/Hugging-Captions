@@ -8,8 +8,9 @@ from transformers import (
     DataCollatorForLanguageModeling, set_seed,
     TextDataset, Trainer, TrainingArguments)
 
-# used in both finetune and generate_captions so make it global
+
 tokenizer = AutoTokenizer.from_pretrained('gpt2')
+device = torch.device('cuda')
 
 
 def finetune(tag):
@@ -46,9 +47,9 @@ def finetune(tag):
             sys.stdout = log
             trainer.train()
         sys.stdout = sys.__stdout__
-        # save the model
         if not os.path.exists(f'./trained_models/{tag}/'):
             os.makedirs(f'./trained_models/{tag}/')
+        # save the model
         model.save_pretrained(f'./trained_models/{tag}/')
         print('Done!')
     except AssertionError:
@@ -69,8 +70,8 @@ def generate_captions(tag, prompt, max_length, min_length, num_return_sequences)
         if text[-1] == '"' and text.count('"') % 2: text = text[:-1]
         return text.strip()
     try:
-        model = AutoModelWithLMHead.from_pretrained(f'./trained_models/{tag}/').to('cuda')
-        encoded_sentence = tokenizer.encode(prompt, add_special_tokens=False, return_tensors="pt").to('cuda')
+        model = AutoModelWithLMHead.from_pretrained(f'./trained_models/{tag}/').to(device)
+        encoded_sentence = tokenizer.encode(prompt, add_special_tokens=False, return_tensors='pt').to(device)
         # https://huggingface.co/transformers/_modules/transformers/modeling_utils.html#PreTrainedModel.generate
         output_sequences = model.generate(
             input_ids= encoded_sentence,
@@ -90,7 +91,6 @@ def generate_captions(tag, prompt, max_length, min_length, num_return_sequences)
                 generated_sequences.append(clean_token(text))
         # remove duplicates
         generated_sequences = list(set(generated_sequences))
-
         # just so I can see things better
         generated_text = '\nCAPTION: '.join(generated_sequences)
         generated_text = 'CAPTION: ' + generated_text
